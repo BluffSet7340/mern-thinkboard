@@ -1,8 +1,16 @@
 import express from "express";
 // import notesRoutes from "./routes/notesRoutes.js"
 import notesRoutes from "./routes/notesRoutes.js"
+import { connectDB } from "./config/db.js";
+import dotenv from "dotenv"
+
+dotenv.config()
+
 
 const app = express()
+const port = process.env.PORT || 5001;
+
+connectDB()
 
 // api prevents direct access to database via the frontend
 
@@ -50,5 +58,5 @@ app.use("/api/notes", notesRoutes);
 // storing each api endpoint
 
 app.listen(5001, ()=>{
-    console.log("Server has started on port 5001");
+    console.log("Server has started on port", port);
 })
