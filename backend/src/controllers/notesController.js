@@ -1,10 +1,25 @@
 // all the controllers go here, decides what to do when a specific request happens
 import Note from "../model/Note.js"
 
-export const getAllNotes = async (req, res)=>{
+export const getSpecificNote = async (req, res)=>{
     // res.status(200).send("You just fetched the notes");
     try{
-        const notes = await Note.find()
+        const note = await Note.findById(req.params.id)
+        if(!note){
+            return res.status(404).json({message:"Note not found"})    
+        }
+        res.status(200).json(note)
+    } catch(error){
+        console.log("Error in getSpecificNote controller", error)
+        res.status(500).json({message: "Internal Server Error"})
+    }
+}
+
+// req is not used at all so we add an underscore as a placeholder
+export const getAllNotes = async (_, res)=>{
+    // res.status(200).send("You just fetched the notes");
+    try{
+        const notes = await Note.find().sort({createdAt:-1}) // newest note comes first
         res.status(200).json(notes)
     } catch(error){
         console.log("Error in getAllNotes controller", error)
@@ -12,14 +27,56 @@ export const getAllNotes = async (req, res)=>{
     }
 }
 
-export const createNewNote = (req, res)=>{
-    res.status(200).send("Note created successfully!");
+export const createNewNote = async (req, res)=>{
+    try{
+        const {title, desc} = req.body;
+        const newNote = new Note({title: title, content: desc})
+        const savedNote = await newNote.save()
+        res.status(201).json({message: savedNote});
+    }catch(err) {
+        console.log("Error is createNewNote controller", err)
+        res.status(500).json({message: 'Internal Server Error'})
+    }
+
 }
 
-export const updateNote =  (req, res)=>{
-    res.status(200).send("Note updated successfully!");
+export const updateNote = async (req, res)=>{
+    try{
+        // first figure out what is being changed
+        const {title, desc} = req.body;
+        // we say req.params.id since in the noteRoutes 
+        // the route for updating notes is defined as
+        // api/notes/:id where :id ("id") is the parameter
+        // second argument is passing in the updated data for the
+        // note
+
+        // interesting thing to note - title should be undefined as in the
+        // api call I am only sending the desc field, yet the call still 
+        // goes through and that specific note updates
+        const updatedNote = await Note.findByIdAndUpdate(req.params.id, {title: title, content: desc}, {new: true})
+        // setting new to true gives me the note after the update is applied
+        if(!updatedNote){
+            return res.status(404).json({message:"Note not found!"})
+        }
+        res.status(200).json({updatedNote})
+    }catch(err){
+        console.log("Error in updateNote controller", err)
+        res.status(500).json({message: 'Internal Server Error'})
+    }
 }
 
-export const deleteNote = (req, res)=>{
-    res.status(200).send("Note deleted successfully!")
+export const deleteNote = async (req, res)=>{
+    try{
+        // an alternate way to do this is to use Note.findByIdAndDelete
+    
+        // const {title, desc} = req.body;
+        const noteToDelete = await Note.deleteOne({_id: req.params.id})
+        if(noteToDelete.deletedCount===0){
+            res.status(404).json({message: "Could not find note to delete"})
+        }
+        res.status(200).json({noteToDelete, message: "Deleted the following note"})
+    }catch(err){
+        console.log("Error in updateNote controller", err)
+        res.status(500).json({message: 'Internal Server Error'})
+    }
 }

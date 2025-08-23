@@ -1,10 +1,11 @@
 import express from "express"
-import { getAllNotes, createNewNote, updateNote, deleteNote } from "../controllers/notesController.js";
+import { getAllNotes, createNewNote, updateNote, deleteNote, getSpecificNote } from "../controllers/notesController.js";
 
 const router = express.Router();
 
 // /api/notes is already prefixed
 router.get("/", getAllNotes)
+router.get("/:id", getSpecificNote) // fetch a specific note
 router.post("/", createNewNote)
 router.put("/:id", updateNote)
 router.delete("/:id", deleteNote)

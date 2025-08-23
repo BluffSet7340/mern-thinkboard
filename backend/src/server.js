@@ -12,6 +12,17 @@ const port = process.env.PORT || 5001;
 
 connectDB()
 
+// middleware
+// before the response is sent, give us access to the req.body, so I can access the 
+// title and content fields for example
+app.use(express.json()) // gives us access to the req body
+
+// middleware comes between the request and response => our custom middleware
+app.use((req , res, next)=>{
+    console.log(`Request method is ${req.method} and Request URL is ${req.url}`) // seeing what sort of requests we're getting ygm
+    next() // this is function that basically says okay we did what we had to do 
+    // and continue the "execution"
+})
 // api prevents direct access to database via the frontend
 
 // "/api/notes is the route"
