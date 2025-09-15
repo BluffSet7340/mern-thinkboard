@@ -55,4 +55,49 @@ Implemented the updateNote and deleteNote controllers. One interesting thing to 
 
 ### 23/08/25
 
-I implemented the getSpecificNote controller where you send a get request to api/notes/:id where "id" is the parameter and returns the corresponding note. A new route was created for the aforementioned function. Then I learn about middleware, which runs some code between a request and a response. In my case, when a get request for all notes is sent, the middleware runs and identifies the method of the request and the URL. Lastly, I installed the upstash ratelimit and redis package to implement rate limiting. This prevents any one user (potentially malicious) from spamming the server with multiple requests, wasting resources
+I implemented the getSpecificNote controller where you send a get request to api/notes/:id where "id" is the parameter and returns the corresponding note. A new route was created for the aforementioned function. Then I learn about middleware, which runs some code between a request and a response. In my case, when a get request for all notes is sent, the middleware runs and identifies the method of the request and the URL. The code to do this is pretty readable too. In the server.js file you use the app.use method with three parameters. First you add whatever code you need to add such as printing console log statements and then you call the next() which is akin to saying "yep let's proceed with the response from the server". 
+
+Lastly, I installed the upstash ratelimit and redis package to implement rate limiting. This prevents any one user (potentially malicious) from spamming the server with multiple requests, wasting resources
+
+### 30/08/25
+
+Implemented the upstash and the rate limiter. First the RateLimit method had to be imported from upstash, then we define the redi and limiter properties inside of it. 100 requests for every 60 seconds was configured but I tried using 6 request every 10 seconds to make sure that the error messages worked. 
+
+Then created and exported a rateLimiter.js function that imports the rateLimit and checks whether or not the limit has been exceeded. Then in the server.js we use the app.use(rateLimiter) to make use of the rate limiter.
+
+### 07/09/25
+
+Completed the backend and started working on the frontend. The frontend is via Vite + React so Hot Module Replacmement stuff. Also installed react router to allow for navigation to different pages. So by appending text to the base url, which is the localhost, I can navigate to the home page, the create note page, and the view note detail page. I also installed the react-hot-toast package so that toast notifications can be added when a note is created successfully, unsuccessfully, or when an operation is unsuccessful.
+
+I also installed tailwindcss, version 3.4.17 for Vite, already have experience in that due to working with next.js so gg.
+
+### 08/09/25
+
+I installed daisyUI, never used it before but it promises to cut down on long tailwindcss classes 
+
+### 09/09/25
+
+Configured DaisyUI but version 4 was used. I decided to go with the cyberpunk theme for this project. 
+
+
+### 10/09/25 & 11/09/25
+
+Created the navbar and the card component, the latter holds the data for the note as well as some functions to edit and delete the note.
+
+cors is cross origin resource sharing -  a browser security feature that checks whether or an api is allowed to share information to a specific url, that being the frontend url. To allow cors you add it to the middleware of the api
+
+### 12/09/25
+
+Modified the server.js by adding the app.use(cors()) at the top of the middleware as is standard practice. Then tested the too many request error message via react toasts and it works. Some work on the frontend.
+
+I converted the note card into a NoteCard component and then used map to iterate over them
+
+### 14/09/25
+
+Created a utility function to print out the date in a nice human readable format
+
+### 15/09/25
+
+Fixed a bug relating to the wrong date being showed. Created an axios.js file which contains the base url to avoid writing the same full url on each page. Implemented the create new note page, which takes the title and content and sends a post request to the api and creates a new note.
+
+So the create not function works well and for good practice implemented a banner that displays that there are not notes and to click on the button to add a new note

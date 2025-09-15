@@ -3,19 +3,23 @@ import express from "express";
 import notesRoutes from "./routes/notesRoutes.js"
 import { connectDB } from "./config/db.js";
 import dotenv from "dotenv"
+import rateLimiter from "./middleware/rateLimiter.js";
+import cors from "cors"
 
 dotenv.config()
-
-
+ 
 const app = express()
 const port = process.env.PORT || 5001;
-
-connectDB()
 
 // middleware
 // before the response is sent, give us access to the req.body, so I can access the 
 // title and content fields for example
+
+// apparently cors needs to come before everything else in this dunya
+app.use(cors()); // allows every request from any url by default but can be restricted to specific urls
+
 app.use(express.json()) // gives us access to the req body
+app.use(rateLimiter);
 
 // middleware comes between the request and response => our custom middleware
 app.use((req , res, next)=>{
@@ -68,6 +72,10 @@ app.use("/api/notes", notesRoutes);
 // a good practice is to create a route folder
 // storing each api endpoint
 
-app.listen(5001, ()=>{
-    console.log("Server has started on port", port);
+// code restructuring, only when db is connected, then you can listen for connections
+connectDB().then(()=>{
+    app.listen(5001, ()=>{
+        console.log("Server has started on port", port);
+    })
 })
+
