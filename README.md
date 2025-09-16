@@ -1,7 +1,51 @@
+# MERN ThinkBoard
+
+## Project Overview
+MERN ThinkBoard is a full-stack note-taking application built with the MERN stack (MongoDB, Express, React, Node.js). It allows users to create, view, update, and delete notes with a modern, responsive UI. The project demonstrates best practices in RESTful API design, React component architecture, and deployment for production. 
+
+## Acknowledgement
+The project was based on this [tutorial](https://www.youtube.com/watch?v=Ea9rrRj9e0Y&t=3s). However, I used a different daisy theme and tried to modify the code wherever I could and added notes in my journal talking about what I learnt. 
+
+## Features
+- Create, view, edit, and delete notes
+- Rate limiting to prevent abuse
+- Responsive design with TailwindCSS and DaisyUI (Cyberpunk theme)
+- Toast notifications for user feedback
+- Organized codebase with clear separation of backend and frontend
+- Deployed on Render.com
+
+## Tech Stack
+- **Frontend:** React, Vite, TailwindCSS, DaisyUI, React Router, Axios
+- **Backend:** Express, MongoDB (Mongoose), Upstash Rate Limiter, dotenv, CORS
+
+## Setup Instructions
+1. **Clone the repository:**
+	```sh
+	git clone https://github.com/BluffSet7340/mern-thinkboard.git
+	cd mern-thinkboard
+	```
+2. **Install dependencies:**
+	```sh
+	npm install --prefix backend
+	npm install --prefix frontend
+	```
+3. **Configure environment variables:**
+	- Create a `.env` file in the `backend` folder with your MongoDB URI and UPSTASH secrets
+4. **Run the development servers:**
+	- Backend: `npm run start --prefix backend`
+	- Frontend: `npm run dev --prefix frontend`
+5. **Build for production:**
+	```sh
+	npm run build
+	```
+6. **Deploy:**
+	- Follow platform-specific instructions (e.g., Render.com) for deployment.
+
+---
+
 # Note Taking App using the MERN Stack
 
 I will be following the tutorial from the youtube channel called codesistency to learn how the MERN stack works. Everything I learn will be recorded in this readme file
-
 
 ## Journal
 
@@ -112,4 +156,6 @@ so the npm run build creates the production build, similar to npx expo build, to
 
 We're gonna have the frontend and backend on a single domain. No need for the cors config then.
 
-Based on the environment the files are served, so both the backend and the frontend are on the same domain
+Based on the environment the files are served, so both the backend and the frontend are on the same domain.
+
+Deployed to Render.com, project complete!!
