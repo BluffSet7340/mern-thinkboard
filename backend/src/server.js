@@ -5,18 +5,23 @@ import { connectDB } from "./config/db.js";
 import dotenv from "dotenv"
 import rateLimiter from "./middleware/rateLimiter.js";
 import cors from "cors"
+import path from 'path'
 
 dotenv.config()
  
 const app = express()
 const port = process.env.PORT || 5001;
+const __dirname = path.resolve()
 
 // middleware
 // before the response is sent, give us access to the req.body, so I can access the 
 // title and content fields for example
 
 // apparently cors needs to come before everything else in this dunya
-app.use(cors()); // allows every request from any url by default but can be restricted to specific urls
+// only needed in development
+if(process.env.NODE_ENV!=="production"){
+    app.use(cors()); // allows every request from any url by default but can be restricted to specific urls
+}
 
 app.use(express.json()) // gives us access to the req body
 app.use(rateLimiter);
@@ -64,6 +69,18 @@ app.use((req , res, next)=>{
 // all incoming http request are routed through notesRouter.js
 // the same process can be repeated for /products, /payments, /emails, and more
 app.use("/api/notes", notesRoutes);
+
+// serves up the vite + react application
+if(process.env.NODE_ENV === 'production'){
+    // let's add a config
+    // the path will be for the frontned dist folder
+    app.use(express.static(path.join(__dirname, "../frontend/dist"))) // serve our optimized react application as a static asset 
+    
+    // should only be done if the application is in production, so render.com 
+    app.get("*", (req, res)=>{
+        res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"))
+    })
+}
 
 // 4 routes and/or endpoints
 

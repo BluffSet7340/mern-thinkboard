@@ -1,0 +1,22 @@
+{
+  "name": "mern-thinkboard",
+  "version": "1.0.0",
+  "description": "I will be following the tutorial from the youtube channel called codesistency to learn how the MERN stack works. Everything I learn will be recorded in this readme file",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm i --prefix backend && npm i --prefix frontend && npm run build --prefix frontend",
+    "start": "npm run start --prefix backend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BluffSet7340/mern-thinkboard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/BluffSet7340/mern-thinkboard/issues"
+  },
+  "homepage": "https://github.com/BluffSet7340/mern-thinkboard#readme"
+}

@@ -100,4 +100,16 @@ Created a utility function to print out the date in a nice human readable format
 
 Fixed a bug relating to the wrong date being showed. Created an axios.js file which contains the base url to avoid writing the same full url on each page. Implemented the create new note page, which takes the title and content and sends a post request to the api and creates a new note.
 
-So the create not function works well and for good practice implemented a banner that displays that there are not notes and to click on the button to add a new note
+So the create not function works well and for good practice implemented a banner that displays that there are not notes and to click on the button to add a new note.
+
+After completing both the frontend and backend, the next step is to deploy it on github and then use a platform called render.com for hosting?
+
+Creating the package.json file outside of the backend and frontend folders manages the packages for those two folders.
+
+### 16/09/25
+
+so the npm run build creates the production build, similar to npx expo build, to optimize for release. 
+
+We're gonna have the frontend and backend on a single domain. No need for the cors config then.
+
+Based on the environment the files are served, so both the backend and the frontend are on the same domain
