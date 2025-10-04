@@ -6,6 +6,8 @@ import dotenv from "dotenv"
 import rateLimiter from "./middleware/rateLimiter.js";
 import cors from "cors"
 import path from 'path'
+import authRoutes from './routes/authRoutes.js'
+import cookieParser from 'cookie-parser'
 
 dotenv.config()
  
@@ -20,10 +22,14 @@ const __dirname = path.resolve()
 // apparently cors needs to come before everything else in this dunya
 // only needed in development
 if(process.env.NODE_ENV!=="production"){
-    app.use(cors()); // allows every request from any url by default but can be restricted to specific urls
+    app.use(cors({
+        origin: "http://localhost:5173",
+        credentials: true
+    })); // allows every request from any url by default but can be restricted to specific urls
 }
 
-app.use(express.json()) // gives us access to the req body
+app.use(express.json()) // gives us access to the req body, allows us to parse incoming requests
+app.use(cookieParser()) // allows you to grab the token from the cookie
 app.use(rateLimiter);
 
 // middleware comes between the request and response => our custom middleware
@@ -65,6 +71,8 @@ app.use((req , res, next)=>{
 //         message:"Note deleted successfully!"
 //     })
 // })
+
+app.use("/api/auth", authRoutes)
 
 // all incoming http request are routed through notesRouter.js
 // the same process can be repeated for /products, /payments, /emails, and more

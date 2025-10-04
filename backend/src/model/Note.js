@@ -14,6 +14,7 @@ const noteSchema = new mongoose.Schema(
             type:String,
             required: true
         },
+        user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }
     },
     // mongodb comes with timestamp by default, can be used for createdAt and updatedAt for the notes
     { timestamps: true }

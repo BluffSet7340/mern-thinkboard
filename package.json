@@ -18,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/BluffSet7340/mern-thinkboard/issues"
   },
-  "homepage": "https://github.com/BluffSet7340/mern-thinkboard#readme"
+  "homepage": "https://github.com/BluffSet7340/mern-thinkboard#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "jsonwebtoken": "^9.0.2"
+  }
 }

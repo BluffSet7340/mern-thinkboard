@@ -159,3 +159,113 @@ We're gonna have the frontend and backend on a single domain. No need for the co
 Based on the environment the files are served, so both the backend and the frontend are on the same domain.
 
 Deployed to Render.com, project complete!!
+
+### 20/09/25
+
+Adding some new features now so starting with auth, and maybe later I'll add some redux feature too. Yes I will use chatgpt for help on this but will take care to ensure that the code is safe and reliable. I will also rely on the tutorial by codesistency as always to get a grasp on authentication
+
+### 21/09/25
+
+So I was able to create the controller, the routes, and the endpoints for the signup, login, and logout. I am still working on the implemetnation for the signup, will have to figure out how JWT comes into this??
+
+Today I learnt that expres only allows you to send one reponse with each request
+
+okay I think I understand how the JWT works. You have the header - metadata about the token, the payload, which should not contain sensitive data since it is not encrypted and lastly the signature, which is the combination of the header + payload and signed with the secret.
+
+So this is about guaranteeing integrity of the application, the server that has the secret key can take the header + payload that it receives and sign it with the secret and compare its test signature with the one it received. If it matches we straight, else there is an issue.
+
+So to generate this secret key, we can use node and run this long command to get the 32 bit key ygm.
+
+So mailtrap will be used as the way to send custom template emails to verify that the user is real or no
+
+### 22/09/25
+
+Still working on the signup route in the auth controller. So when the user signs up, they should receive a code in their email to ensure that no fake emails are used and no spam attack from malicious actors. 
+
+So three email templates are provided, I just copied em from codesistency's tutorial - for the sign up, reset password request, reset password success you get me
+
+So the verification email is sent with the code to the intended recipient
+
+so since I am using the free plan of mailtrap, I can only send verification and other sorts of emails to my email registered with them
+
+for the user to input the verification code that they receive we need to create another endpoint for this
+
+### 23/09/25
+
+okay I was having some issue with the requests not working all of a sudden but I get it now lol. I set the request to be GET instead of POST on Postman
+
+So another bug where mailtrap expects the name of the object to be email not any other name, I was using userEmail.
+
+Another bug fix where the name field should be inside of the template variables for the welcome email, with a proper plan, this would send emails where the name would dynamically change based on the details that the user inputtted.
+
+Another bug fix, subject and category fields are not allowed when using template uuid. 
+
+also realized that I need to add the res (as in response) otherwise in postman the request just keeps loading and never ends.
+
+Added the first_name parameter to the email so that it shows the username in the welcome email
+
+so from what I understand, when doing the logout, it removes the cookie from the local browser, the localhost in this case
+
+Another bug but it was caused by me not putting the await keyword before telling mongodb to find me the specified user
+
+So the logout get rids of token from the cookie and the login now works and sets the cookie to the token, generated via JWT
+
+### 25/09/25
+
+now creating the forgot password endpoint. So by creating a reset token we can have the reset url to be used for creating a new password. Had a little discussion with the AI whether I should hash the password on the frontend and then send it to the backend but that's a bad idea cuz apparently people can expose the JS and see the hash algo and salt rounds and whatnot. It is alright to send plaintext password as long as you do it over HTTPS, thx to its TLS encryption. Also read some posts on stack overflow to confirm this
+
+A bug I noticed is that I kept getting an error when trying to hash the password and save it to the db but turns out that bcrypt is promise, so you have to add the await keyword before it, let it complete first and then continue execution
+
+So the true nature of resetting passwords is interesting, based on the email that is sent, a user token is generated connected to that email and when the new password is updated, that same token is used again, ofc the token can only last one hour so it needs to be done in that timeframe
+
+okay so the hash is different on the db as before which means it works xD. I guess one issue is the fact that you can spam the forgot password over and over again, having a cool down should be good or something?
+
+Still not sure what to do with the token set in the cookie via jwt but let's see 
+
+okay so since mailtrap limit is exceeded, I'll put the link for resetting the password in the frontend itself, user will click on it and be navigated to the reset password page kk
+
+
+### 26/09/25
+
+So with the middleware we check whether or not the user is logged in. First we try to extract the token from the request - if no token then that request is unauthorized and blocked. If we do get the token - the server runs a jwt.verify check using the secret key to make sure that the data hasn't been tampered - gives us integrity. It can also check if the token is expired
+
+One thing that bewilders me is the fact that this isn't some vodoo magic or just using packages. It is just me writing code, lots of if and else statements, destructuring the requests, which are always in json, do my work such as updating the db and whatnot and then you send a respose of whether it is successful or not. It really is simply isn't it.
+
+### 28/09/25
+
+Okay so now is the time to protect the routes for creating, updating, and deleting notes belonging to specific users. Will also need to protect it on the frontend too but need to figure that part out.
+
+So far I did edit the scheme of the Note to include the userId.
+
+
+
+### 29/09/25
+
+So based on Codesistency's tutorial, I will be implementing the criteria for the password meter - so that password meet basic requirements. Yea tbh I am just copy and pasting this part from his tutorial but trying to understand ygm. 
+
+### 01/10/25
+
+Yea deadass used chatgpt to create the verify email page which those neat features that you normally see - easy copy paste, then backspace changes focus to previous input box, and adding digits focuses to next input box.
+
+Interesting now we will be using zustand for state management of the authentication, makes sense cuz you do not want to have the user log in constantly after a page refresh?? I guess.
+
+I am unable to create another account to showcase the verification step, hmm maybe there is another way I can still make an account and just skip the mailtrap stuff just to show that this works you get me
+
+
+### 02/10/25
+
+The check-auth function will be used to protect our routes ygm
+
+### 03/10/25
+
+so ProtectedRoutes component had to be created and whatever components that you want to protect, you have to wrap those components inside of the ProtectedRoute
+
+Right now trying to figure out the state management for the log out part proving to be quite difficult cuz it does not seem that the tutorial covererd it but it should be fine, he implemented everything else for me so I have a basic idea of how that works tbh.
+
+### 04/10/25
+
+okay I was wrong the logout function on the authStore was alr implemented by him so I did that and called that function once the logout button was clicked and it worked and navigated me to the login page alhamdulillah. Trying to go to the homepage after log out redirects me to the login page
+
+Okay sweet so claude was giving some interesting prompts and from there I figured out that one of my responses was giving a 400 status code when the response was a success, so I changed it to 200 and now when the user is logged in and tries to access a route that does not exist, they are redirected to the home page and if the user is not logged in and does the same, they are redirected to the login page xD
+
+Okay so even though I exceeded all of mailtrap limit, making it impossible to test the adding new account and resetting password I can still add another acc through mongodb so then I can simulate multiple users ygm
