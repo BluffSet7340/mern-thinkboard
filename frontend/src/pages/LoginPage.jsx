@@ -1,32 +1,33 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useAuthStore } from "../store/authStore";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const {login, isLoading, error} = useAuthStore()
+  const [showResetButton, setShowResetButton] = useState(false);
+  const {login, isLoading, error} = useAuthStore();
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setShowResetButton(false); // Hide reset button on new attempt
     try {
-      await login(email, password)
-      // // Replace with your API endpoint
-      // const res = await fetch("http://localhost:5001/api/auth/login", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({ email, password }),
-      // });
-      // if (!res.ok) throw new Error("Login failed");
-      // toast.success("Logged in successfully!");
-      // TODO: Save token and redirect
+      await login(email, password);
     } catch (err) {
-
       toast.error(error);
-      console.log(err)
+      console.log(err);
+      
+      // Show reset button if it's a credential/password error
+      if (error && (error.includes("Invalid") || error.includes("password") || error.includes("credentials"))) {
+        setShowResetButton(true);
+      }
     }
+  };
+
+  const handleResetPassword = () => {
+    navigate("/forgot-password");
   };
 
   return (
@@ -73,10 +74,21 @@ const LoginPage = () => {
         <button
           type="submit"
           className="btn btn-primary w-full mt-4"
-          disabled={loading}
+          disabled={isLoading}
         >
-          {loading ? "Logging in..." : "Login"}
+          {isLoading? "Logging in..." : "Login"}
         </button>
+        
+        {/* Reset Password Button - appears after failed login */}
+        {showResetButton && (
+          <button
+            type="button"
+            onClick={handleResetPassword}
+            className="btn btn-outline btn-warning w-full mt-2 animate-fade-in"
+          >
+            Reset Password
+          </button>
+        )}
       </form>
             <div className="px-8 py-4 bg-yellow-500 bg-opacity-50
       flex justify-center  w-full max-w-md rounded-b-lg">

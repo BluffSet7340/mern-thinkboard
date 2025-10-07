@@ -269,3 +269,11 @@ okay I was wrong the logout function on the authStore was alr implemented by him
 Okay sweet so claude was giving some interesting prompts and from there I figured out that one of my responses was giving a 400 status code when the response was a success, so I changed it to 200 and now when the user is logged in and tries to access a route that does not exist, they are redirected to the home page and if the user is not logged in and does the same, they are redirected to the login page xD
 
 Okay so even though I exceeded all of mailtrap limit, making it impossible to test the adding new account and resetting password I can still add another acc through mongodb so then I can simulate multiple users ygm
+
+one thing that confused me was his structure in accessing the errors from axios like he would start with error.response.data.message and that did not make sense to me but this is basically the strucuture of an axios error response, got some sample error from claude as well to understand it 
+
+### 06/10/25
+
+So I added safeguards to prevent the reset password url from being accessed by someone who is already logged in or someone who is trying to access it without logging in and failing an attempt first.
+
+I've decided to skip the forgot password stuff cuz the mailtrap is not working rn so no point but it is still possible 

@@ -69,7 +69,7 @@ export const login = async (req, res) => {
     });
     if (!user) {
       return res
-        .status(400)
+        .status(401)
         .json({ success: fail, message: "Invalid Credentials" });
     } else {
       // bcrypt uses the blowfish cipher with a default number of salt rounds - 10
@@ -162,31 +162,31 @@ export const forgotPassword = async (req, res) => {
   const { email } = req.body;
 
   try {
-    const user = await User.findOne({ email });
+    // const user = await User.findOne({ email });
 
-    if (!user) {
-      return res
-        .status(400)
-        .json({ success: false, message: "User not found" });
-    }
+    // if (!user) {
+    //   return res
+    //     .status(400)
+    //     .json({ success: false, message: "User not found" });
+    // }
 
-    // generate a reset token
-    const resetToken = crypto.randomBytes(20).toString("hex");
-    // const hashedresetToken = await bcrypt.hash(resetToken, 10) // hash the token
-    const tokenExpiryDate = Date.now() + 1 * 60 * 60 * 1000; // 1 hour
+    // // generate a reset token
+    // const resetToken = crypto.randomBytes(20).toString("hex");
+    // // const hashedresetToken = await bcrypt.hash(resetToken, 10) // hash the token
+    // const tokenExpiryDate = Date.now() + 1 * 60 * 60 * 1000; // 1 hour
 
-    // now assigning these to the user
-    user.resetPasswordExpiresAt = tokenExpiryDate;
-    user.resetPasswordToken = resetToken;
+    // // now assigning these to the user
+    // user.resetPasswordExpiresAt = tokenExpiryDate;
+    // user.resetPasswordToken = resetToken;
 
-    await user.save();
+    // await user.save();
 
     // await sendPasswordChangeRequest(user.email, `${process.env.CLIENT_URL}/reset-password/${resetToken}`);
 
     res.status(201).json({
       success: true,
       message: "Email successfully sent",
-      url: `${process.env.CLIENT_URL}/reset-password/${resetToken}`,
+      // url: `${process.env.CLIENT_URL}/reset-password/${resetToken}`,
     });
   } catch (error) {
     console.log("Error: ", error);
