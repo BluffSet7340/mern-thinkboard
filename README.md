@@ -277,3 +277,7 @@ one thing that confused me was his structure in accessing the errors from axios 
 So I added safeguards to prevent the reset password url from being accessed by someone who is already logged in or someone who is trying to access it without logging in and failing an attempt first.
 
 I've decided to skip the forgot password stuff cuz the mailtrap is not working rn so no point but it is still possible 
+
+### 07/10/25
+
+the environment had to be set to production so that the frontend production files could be served on the same localhost address.
