@@ -1,7 +1,7 @@
 # MERN ThinkBoard
 
 ## Project Overview
-MERN ThinkBoard is a full-stack note-taking application built with the MERN stack (MongoDB, Express, React, Node.js). It allows users to create, view, update, and delete notes with a modern, responsive UI. The project demonstrates best practices in RESTful API design, React component architecture, and deployment for production. 
+MERN ThinkBoard is a full-stack note-taking application built with the MERN stack (MongoDB, Express, React, Node.js). It allows users to create, view, update, and delete notes with a modern, responsive UI. 
 
 ## Acknowledgement
 The project was based on this [tutorial](https://www.youtube.com/watch?v=Ea9rrRj9e0Y&t=3s). However, I used a different daisy theme and tried to modify the code wherever I could and added notes in my journal talking about what I learnt. 
