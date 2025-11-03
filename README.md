@@ -43,6 +43,16 @@ The project was based on this [tutorial](https://www.youtube.com/watch?v=Ea9rrRj
 
 ---
 
+## Screenshots 
+
+![Login Page](https://github.com/BluffSet7340/mern-thinkboard/blob/main/logging%20in.png)
+
+![Page containing the notes](https://github.com/BluffSet7340/mern-thinkboard/blob/main/notes%20page.png)
+
+![Editing Notes](https://github.com/BluffSet7340/mern-thinkboard/blob/main/edtiing%20note.png)
+
+![Page containing the notes](https://github.com/BluffSet7340/mern-thinkboard/blob/main/notes%20page.png)
+
 # Note Taking App using the MERN Stack
 
 I will be following the tutorial from the youtube channel called codesistency to learn how the MERN stack works. Everything I learn will be recorded in this readme file
