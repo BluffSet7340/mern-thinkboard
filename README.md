@@ -49,7 +49,7 @@ The project was based on this [tutorial](https://www.youtube.com/watch?v=Ea9rrRj
 
 ![Page containing the notes](https://github.com/BluffSet7340/mern-thinkboard/blob/main/notes%20page.png)
 
-![Editing Notes](https://github.com/BluffSet7340/mern-thinkboard/blob/main/edtiing%20note.png)
+![Editing Notes](https://github.com/BluffSet7340/mern-thinkboard/blob/main/editing%20note.png)
 
 ![Page containing the notes](https://github.com/BluffSet7340/mern-thinkboard/blob/main/notes%20page.png)
 
