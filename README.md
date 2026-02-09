@@ -4,6 +4,8 @@
 
 ![Application Demo](https://github.com/BluffSet7340/mern-thinkboard/blob/main/demo%20video.gif?raw=true)
 
+(Mind the bad quality, was working from an older laptop)
+
 ## Project Overview
 MERN ThinkBoard is a full-stack note-taking application built with the MERN stack (MongoDB, Express, React, Node.js). It allows users to create, view, update, and delete notes with a modern, responsive UI. 
 
